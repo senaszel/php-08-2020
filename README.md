@@ -1,12 +1,11 @@
---- 
+Fuzja
+=====
 
 #### W ocenie zadań liczy się dla nas przede wszystkim architektura, reużywalność zaimplementowanych rozwiązań i stosowanie się do standardów.
 #### Nie trać czasu na implementacje dodatkowych mechanizmów np. cachowania, czy konfigurację Laravela. Wystarczy, że pokażesz nam w kodzie (komentarzem lub pseudofasadą), jaka była twoja intencja.   
 
 ---
 
-Fuzja
-=====
 
 Firmy FOO, BAR i BAZ zajmujące się dostarczaniem treści telewijnych postanowiły połączyć
 siły, skutkiem czego doszło do fuzji. Zarząd nowo powstałej spółki zdecydował o utworzeniu
