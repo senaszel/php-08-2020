@@ -1,3 +1,10 @@
+--- 
+
+#### W ocenie zadań liczy się dla nas przede wszystkim architektura, reużywalność zaimplementowanych rozwiązań i stosowanie się do standardów.
+#### Nie trać czasu na implementacje dodatkowych mechanizmów np. cachowania, czy konfigurację Laravela. Wystarczy, że pokażesz nam w kodzie (komentarzem lub pseudofasadą), jaka była twoja intencja.   
+
+---
+
 Fuzja
 =====
 
@@ -129,7 +136,3 @@ Wskazówki
 1. `php artisan serve` pozwala na uruchomienie serwera do testów aplikacji.
 2. `composer require lcobucci/jwt` instaluje bibliotekę obsługującą JWT.
 
-
-W ocenie zadania liczy się dla nas przede wszystkim architektura i reużywalność zaimplementowanych rozwiązań.
-Nie trać czasu na implementacje mechanizmów np. cachowania, czy konfigurację Laravela. Użyj np. Cache::put() 
-czy jakiegokolwiek innego zapisu, który pokaże, jaka była Twoja intencja.
