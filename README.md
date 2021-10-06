@@ -1,33 +1,26 @@
-Fuzja
+Merger
 =====
 
-#### W ocenie zadań liczy się dla nas przede wszystkim architektura, reużywalność zaimplementowanych rozwiązań i stosowanie się do standardów.
-#### Nie trać czasu na implementacje dodatkowych mechanizmów np. cachowania, czy konfigurację Laravela. Wystarczy, że pokażesz nam w kodzie (komentarzem lub pseudofasadą), jaka była twoja intencja.   
+#### In the assessment of tasks, what matters most to us is architecture, reusability of implemented solutions and adherence to standards.
+#### Don't waste time implementing additional mechanisms, e.g. caching or Laravel configuration. All you have to do is show us in the code (with a comment or a pseudo-facade) what your intention was.
 
 ---
 
 
-Firmy FOO, BAR i BAZ zajmujące się dostarczaniem treści telewijnych postanowiły połączyć
-siły, skutkiem czego doszło do fuzji. Zarząd nowo powstałej spółki zdecydował o utworzeniu
-aplikacji odpowiadającej za integrację systemów informatycznych używanych przez te firmy.
-Celem integracji jest udostępnienie funkcjonalności wszystkich systemów dla klientów
-tych trzech firm.
+Television content companies FOO, BAR and BAZ joined forces, resulting in a merger. The management board of the newly established company decided to create an application responsible for the integration of IT systems used by these companies. The aim of the integration is to make the functionality of all systems available to the clients of these three companies.
 
-## Zadanie 1
+## Task 1
 
-Pierwsza faza projektu dotyczy modułu uwierzytelniania.
-W pliku `routes/api.php` zdefiniowany jest routing dla API. Endpoint do logowania
-jest obsługiwany przez kontroler `app/Http/Controllers/AuthController.php`.
-Metoda `login()` jest odpowiedzialna za
-1. Uwierzytelnienie klienta w systemie firmy, w którym istnieje jego konto. O tym, do której
-   firmy przynależy klient decyduje budowa jego loginu. Loginy klientów FOO mają prefiks **FOO_**,
-   loginy klientów BAR mają prefiks **BAR_**, natomiast loginy klientów BAZ są poprzedzone prefiksem **BAZ_**.
-   Przykładowo login **FOO_123** jest poprawnym loginem w systemie firmy FOO. Loginy **ABC_100**, **Foo_123** są
-   niepoprawne.
-2. Utworzenie tokena JWT w przypadku poprawnego uwierzytelnienia. Token powinien zawierać
-   **login użytkownika** i **system** w którym nastąpiło uwierzytelnienie.
-3. Zwrócenie odpowiedzi w formacie JSON.
-   Struktura odpowiedzi w przypadku powodzenia:
+The first phase of the project concerns the authentication module.
+Routing for the API is defined in the `routes/api.php` file.
+The login endpoint is handled by the controller `app/Http/Controllers/AuthController.php`.
+The `login()` method is responsible for
+
+
+1. Authenticating the client in the company system where his account exists. The company the client belongs to is determined by the construction of his login. The FOO customer logins have the prefix **FOO**_, the BAR customer logins have the prefix **BAR**_, and the BAZ customer logins are preceded by the prefix **BAZ**_. For example, the login **FOO_123** is a valid login in the system of the FOO company. Logins **ABC_100**, **Foo_123** are invalid.
+2. Creating JWT token in case of successful authentication. The token should contain the **user's login** and the **system** in which the authentication took place.
+3. Returning the response in JSON format.
+   Structure of response in case of success:
    ```
    {
       "status": "success",
@@ -35,26 +28,26 @@ Metoda `login()` jest odpowiedzialna za
    }
    ```
 
-   Struktura odpowiedzi w przypadku niepowodzenia:
+   Structure of response in case of failure:
    ```
    {
       "status": "failure"
    }
    ```
 
-W katalogu External znajdują się klasy służące do komunikacji z systemami firm.
+There are classes in the External directory for communication with systems companies.
 
-`External/Foo/Auth/AuthWS.php` - klasa do uwierzytelniania klientów FOO
-`External/Bar/Auth/LoginService.php` - klasa do uwierzytelnianie klientów BAR
-`External/Baz/Auth/Authenticator.php` - klasa do uwierzytelniania klientów BAZ
+`External/Foo/Auth/AuthWS.php` - class for authenticating clients FOO
+`External/Bar/Auth/LoginService.php` - class for authenticating BAR
+`External/Baz/Auth/Authenticator.php` - class for authenticating BAZ clients
 
 --- 
 
-#### Twoim zadaniem jest implementacja metody login. Możesz dowolnie zmieniać strukturę plików i katalogów z wyjątkiem folderu External, który należy traktować jako zewnętrzną bibliotekę niepodlegającą modyfikacjom.
+#### Your task is to implement the method login. You can change the structure of files and directories freely, except for the External folder, which should be treated as an external library that cannot be modified.
 
 ---
 
-### Przykładowe testy
+### Sample tests
 
 Request 1
 ```curl --location --request POST 'http://127.0.0.1:8000/api/login' \
@@ -83,32 +76,29 @@ Response 2
 ```{"status":"success","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6IkZPT18xIiwiY29udGV4dCI6IkZPTyIsImlhdCI6MTUxNjIzOTAyMn0.iOLIsd1TXyU53nrMGfjShXD7KSMz_lbaT256TQVYDz8"}```
 
 
-## Zadanie 2
+## Task 2
 
-Firmy Foo, Bar i Baz są dostawcami materiałów filmowych. Jednym z celów tej aplikacji jest udostępnienie klientom
-dostęp do wszystkich materiałów oferowanych przez dostawców. 
+Companies Foo, Bar and Baz are the suppliers of the footage. One of the goals of this app is to provide clients with access to all the material offered by the vendors.
 
-W plikach
+In the files
 ```
 `External/Bar/Movies/MovieService.php`
 `External/Baz/Movies/MovieService.php`
 `External/Foo/Movies/MovieService.php`
 ```
-znajdują się klasy z metodą `getTitles()`, która zwraca listę tytułów (w różnym formacie) dla danego systemu. Żaden tytuł nie należy do więcej niż jednego systemu.
-
-
----
-
-#### Metody `getTitles()` w ww. plikach traktujemy jako zewnętrzne źródło danych. Nie modyfikuj jej!!!
+there are classes with the method `getTitles()` which returns a list of titles (in different format) for your system. No title belongs to more than one system.
 
 ---
 
-W pliku `app/Http/Controllers/MovieController.php` znajduje się kontroler z metodą `getTitles()`.
-Metoda ta jest odpowiedzialna za:
-1. Pobranie tytułów z systemów Foo, Bar, Baz.
-2. Połączenie wyników.
-3. Zwrócenie wyników w odpowiedzi JSON.
-   Struktura odpowiedzi w przypadku powodzenia:
+#### `getTitles()` methods mentioned above should be treated as an external data source. Don't modify them!!!
+
+---
+
+There is a controller with the `getTitles()` method in the `app/Http/Controllers/MovieController.php`.
+This method is responsible for:
+1. Retrieving titles from Foo, Bar, Baz systems.
+2. Combining the results.
+3. Returning the results in a JSON response. Structure of the response in case of success:
    ```
    [
       "title 1",
@@ -116,22 +106,23 @@ Metoda ta jest odpowiedzialna za:
       "title 3"
    ]
    ```
-    Struktura odpowiedzi w przypadku niepowodzenia:
+   Structure of the response in case of failure:
    ```
    {
       "status": "failure"
    }
    ```
 
-Serwisy `MovieService` są niestabilne. Czasami występuje błąd połączenia, co skutkuje rzuceniem wyjątku `ServiceUnavailableException`. 
-Zapewnij mechanizm powtarzania requestu i cache dla wyniku tak, aby odciążyć zewnętrzne systemy oraz zminimalizować prawdopodobieństwo niepowodzenia.
+`MovieService` services are unstable. Occasionally a connection error occurs,
+resulting in a `ServiceUnavailableException` being thrown. Provide request repetition
+mechanism and result cache to relieve external systems and minimize the probability of failure.
 
-### Uwagi
-- Jeśli w punkcie (1) pobranie tytułów z co najmniej jednego systemu nie powiedzie się, należy zwrócić komunikat o błędzie.
+### Notes
+- If the downloading of titles from one or more systems fails in step (1), return an error message.
 
 
-Wskazówki
+Tips
 =========
-1. `php artisan serve` pozwala na uruchomienie serwera do testów aplikacji.
-2. `composer require lcobucci/jwt` instaluje bibliotekę obsługującą JWT.
+1. `php artisan serve` allows you to run an application test server.
+2. `composer require lcobucci/jwt` installs the library, which supports JWT.
 
