@@ -126,3 +126,4 @@ Tips
 1. `php artisan serve` allows you to run an application test server.
 2. `composer require lcobucci/jwt` installs the library, which supports JWT.
 
+# php-08-2020
